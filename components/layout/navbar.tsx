@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { cn } from "cn";
+import { SignedIn, SignedOut, UserButton } from "@neondatabase/auth/react";
 
 import { Input } from "../ui/input";
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 
 export default function Navbar() {
 	return (
@@ -34,22 +35,47 @@ export default function Navbar() {
 					/>
 				</div>
 
-				<div className="ml-auto flex items-center gap-2">
+				<SignedIn>
 					<Link
-						href={"/auth/sign-in"}
+						href={"/submit"}
 						className={cn(
-							buttonVariants({
-								variant: "ghost",
-								size: "default",
-							}),
+							buttonVariants({ variant: "outline", size: "sm" }),
+							"hidden sm:inline-flex",
 						)}
 					>
-						Log In
+						Create
 					</Link>
-					<Link href={"/auth/sign-up"} className={cn(buttonVariants())}>
-						Sign Up
-					</Link>
-				</div>
+
+					<Button
+						variant={"ghost"}
+						size={"icon"}
+						className={"text-muted-foreground"}
+						aria-label="Notifications"
+					>
+						<Bell className="size-5" />
+					</Button>
+
+					<UserButton />
+				</SignedIn>
+
+				<SignedOut>
+					<div className="ml-auto flex items-center gap-2">
+						<Link
+							href={"/auth/sign-in"}
+							className={cn(
+								buttonVariants({
+									variant: "ghost",
+									size: "default",
+								}),
+							)}
+						>
+							Log In
+						</Link>
+						<Link href={"/auth/sign-up"} className={cn(buttonVariants())}>
+							Sign Up
+						</Link>
+					</div>
+				</SignedOut>
 			</div>
 		</header>
 	);
