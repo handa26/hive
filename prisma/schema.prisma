@@ -34,7 +34,7 @@ model Post {
 model Tag {
   slug     String    @id
   label    String
-  hasColor String    @map("hash_color")
+  hashColor String    @map("hash_color")
   postTags PostTag[]
 
   @@map("tags")
